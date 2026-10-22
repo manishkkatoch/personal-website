@@ -1,0 +1,24 @@
+[package]
+name = "field"
+version = "0.1.0"
+edition = "2021"
+build = "build.rs"
+description = "A personal site compiled into a single WebAssembly binary."
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "generate"
+path = "src/bin/generate.rs"
+
+[dependencies]
+pulldown-cmark = { version = "0.13", default-features = false, features = ["html"] }
+
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true

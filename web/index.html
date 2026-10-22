@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="{{base}}">
+<title>{{title}}</title>
+<meta name="description" content="{{description}}">
+<meta property="og:title" content="{{title}}">
+<meta property="og:description" content="{{description}}">
+<meta property="og:type" content="website">
+<meta name="color-scheme" content="light dark">
+{{canonical}}
+<link rel="alternate" type="application/rss+xml" title="{{name}}" href="feed.xml">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='3.2' fill='%23161615'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css?v={{v}}">
+<link rel="preload" href="field.wasm?v={{v}}" as="fetch" type="application/wasm" crossorigin>
+<script type="module" src="app.js?v={{v}}"></script>
+</head>
+<body data-shape="{{shape}}">
+<canvas id="field" aria-hidden="true"></canvas>
+<main id="view">{{view}}</main>
+<div id="seek" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <input id="seek-q" type="search" autocomplete="off" spellcheck="false" placeholder="search everything" aria-label="Search" aria-controls="seek-r">
+  <div id="seek-r" role="listbox"></div>
+</div>
+<button id="hint" type="button" hidden>just type</button>
+</body>
+</html>
