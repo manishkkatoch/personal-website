@@ -22,3 +22,11 @@ lto = true
 codegen-units = 1
 panic = "abort"
 strip = true
+
+# Used by `cargo dev`: optimised enough for a smooth field, quick to rebuild.
+[profile.wasm-dev]
+inherits = "release"
+opt-level = 2
+lto = false
+codegen-units = 16
+incremental = true

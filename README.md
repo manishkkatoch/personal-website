@@ -46,14 +46,34 @@ The sample posts describe the site itself; the sample events are
 placeholders, so replace them. Set `timezone`, `city` and `calendar` in
 `site.md` before going live.
 
-## Build
+## Local development
 
-Needs Rust with the wasm target (`rustup target add wasm32-unknown-unknown`).
+Needs Rust with the wasm target:
 
 ```sh
-./build.sh                         # writes dist/
-python3 -m http.server -d dist     # http://localhost:8000
-cargo test                         # unit tests for dates, content, search, ics, views, field
+rustup target add wasm32-unknown-unknown
+cargo dev
+```
+
+Open http://127.0.0.1:8000. Edit anything in `content/`, `src/` or `web/`
+and every open tab rebuilds and reloads, keeping its scroll position.
+A content edit lands in a second or three. Build errors appear in the
+terminal and as an overlay in the browser, and clear once fixed.
+
+- `PORT=8001 cargo dev` picks another port.
+- `HOST=0.0.0.0 cargo dev` lets you open it from your phone on the same
+  network (the touch interactions are worth checking there).
+- `cargo test` runs the unit tests: dates, content, search, ics, views, field.
+
+The dev server (`src/bin/dev.rs`) has no dependencies. It builds the wasm
+with a lighter `wasm-dev` profile and writes to `target/site-dev`, so it
+never touches `dist/`.
+
+## Production build
+
+```sh
+./build.sh                         # writes dist/, fully optimised
+python3 -m http.server -d dist     # check it at http://localhost:8000
 ```
 
 `BASE=/sub/path/` builds for a sub-path, `SITE_URL=https://example.com`
@@ -83,5 +103,6 @@ src/search.rs     search index
 src/ics.rs        iCalendar output
 src/wasm.rs       raw wasm ABI (no wasm-bindgen)
 src/bin/generate.rs  static site generator
+src/bin/dev.rs    local dev server: watch, rebuild, live reload
 web/              HTML template, stylesheet, JS shim
 ```
